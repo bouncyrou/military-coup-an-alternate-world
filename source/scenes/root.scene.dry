@@ -39,6 +39,7 @@ Q.saves_disabled = 0;
 Q.discard_disabled = 0;
 Q.hand_size = 3;
 Q.starting_dissent = 1; // default dissent = normal
+Q.starting_secrecy = 1;
 Q.starting_relations = 1;
 Q.shuffle_leadership_enabled = 0;
 Q.cabinet_enabled = 0;
@@ -56,9 +57,11 @@ Q.starting_dues = 2;
 Q.dues = 2;
 
 // the state of the party
-// overall dissent reduces every increase in party support.
+// overall dissent reduces the efficacy of conspiracy actions.
 Q.dissent = 0.05;
 Q.dissent_percent = 5;
+// If secrecy (actually a lack of it) gets too high, you are discovered.
+Q.secrecy = 0.05;
 
 // factions
 Q.factions = ['left', 'center', 'labor', 'reformist', 'neorevisionist'];
@@ -610,11 +613,11 @@ For more information on the politics and government of the German Republic, see 
 - @1928_custom: Customize difficulty settings
 
 @1928_easy
-on-arrival: difficulty = -1; resources = 4; dues = 3; starting_rb_strength = 2500; rb_strength = 2500; left_dissent = 10; kpd_relation = 29; z_relation = 54; dvp_relation = 49; starting_budget = 5; budget = 5; hand_size = 4; starting_dissent = 0; starting_relations = 0;
+on-arrival: difficulty = -1; resources = 4; dues = 3; starting_rb_strength = 2500; rb_strength = 2500; left_dissent = 10; kpd_relation = 29; z_relation = 54; dvp_relation = 49; starting_budget = 5; budget = 5; hand_size = 4; starting_dissent = 0; starting_relations = 0; starting_secrecy = 0;
 go-to: 1928_main
 
 @1928_hard
-on-arrival: difficulty = 1; resources = 0; starting_resources = 0; dues = 1; starting_rb_strength = 1000; rb_strength = 1000; reformist_dissent = 25; left_dissent = 30; labor_dissent = 25; center_dissent = 25; z_relation = 41; kpd_relation = 16; dvp_relation = 31; starting_budget = 3; budget = 3; discard_disabled = 1; starting_dissent = 2; starting_relations = 2;
+on-arrival: difficulty = 1; resources = 0; starting_resources = 0; dues = 1; starting_rb_strength = 1000; rb_strength = 1000; reformist_dissent = 25; left_dissent = 30; labor_dissent = 25; center_dissent = 25; z_relation = 41; kpd_relation = 16; dvp_relation = 31; starting_budget = 3; budget = 3; discard_disabled = 1; starting_dissent = 2; starting_relations = 2; starting_secrecy = 2;
 go-to: 1928_main
 
 @1928_historical
@@ -639,6 +642,7 @@ Q.kpd_relation = 16;
 Q.dvp_relation = 31;
 Q.budget = 2;
 Q.fundraising_disabled = 1;
+Q.starting_secrecy = 2;
 Q.saves_disabled = 1;
 this.state.disableSaves = true;
 !}
