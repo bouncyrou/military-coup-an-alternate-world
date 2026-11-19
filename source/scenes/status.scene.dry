@@ -20,12 +20,7 @@ if (Q.economic_growth) {
 
 Resources available: [+ resources +]
 
-SPD position: [? if spd_toleration : toleration ?][? if spd_in_government : in government - ?][? if spd_toleration == 0 and spd_in_government == 0 and spd_caretaker == 0 : opposition ?][? if spd_caretaker : caretaker government ?]
-[? if in_weimar_coalition and spd_in_government: Weimar Coalition ?][? if in_grand_coalition and spd_in_government: Grand Coalition ?][? if in_popular_front and spd_in_government: Popular Front ?][? if in_left_front and spd_in_government: Left Front ?][? if in_spd_majority and spd_in_government: SPD majority ?][? if in_minority_government and spd_in_government: minority government ?][? if in_emergency_government and spd_in_government: emergency government ?]
-
-[? if spd_in_government and not in_spd_majority and not in_left_front : Coalition dissent: [+ coalition_dissent : coalition_dissent +] ?]
-
-[? if spd_in_government and (in_left_front or in_popular_front): KPD coalition dissent: [+ kpd_coalition_dissent : coalition_dissent +] ?]
+Conspiracy status: [ + conspiracy_influence + influence + ]
 
 Internal dissent: [+ dissent_percent : dissent +]
 
@@ -33,10 +28,11 @@ Secrecy: [+ secrecy : secrecy +]
 
 = Government
 
-President: [+ president +]
+Monarch: [+ king +]
 
-Chancellor: [+ chancellor +] ([+ chancellor_party +])
+Prime Minister: [+ chancellor +] ([+ chancellor_party +])
 
+Government status
 Reichstag composition:
 
 # 1928: 30, 1930: 25, 1932: 22
@@ -60,7 +56,7 @@ Others: [+ other_r +]%
 
 [? if spd_in_government = 1 : Budget: [+ budget +] ?]
 
-Next election: [+ next_election_month : month +] [+ next_election_year +]
+Next election: [+ next_election_month : month +] [+ next_election_year : year +]
 
 = Economics
 
@@ -152,7 +148,7 @@ Prussian police loyalty: [+ prussian_police_loyalty : loyalty +]
 
 @polls
 on-arrival: {!
-Q.pro_republic_disp = Math.round(Q.pro_republic);
+Q.pro_monarchy_disp = Math.round(Q.pro_monarchy);
 Q.nationalism_disp = Math.round(Q.nationalism);
 Q.socialism_disp = Math.round(Q.socialism);
 !}
@@ -195,4 +191,4 @@ Unemployed: SPD: [+ unemployed_spd_display +]%, Z: [+ unemployed_z_display +]%, 
 
 Catholics: SPD: [+ catholics_spd_display +]%, Z: [+ catholics_z_display +]%, KPD: [+ catholics_kpd_display +]%, [? if not ddp_name: DDP?][? if ddp_name != 0 : [+ ddp_name +]?]: [+ catholics_ddp_display +]%, DVP: [+ catholics_dvp_display +]%; DNVP: [+ catholics_dnvp_display +]%, NSDAP: [+ catholics_nsdap_display +]%, Others: [+ catholics_other_display +]% [? if sapd_formed: SAPD: [+ catholics_sapd_display +]% ?] [? if srpd_formed: SRPD: [+ catholics_srpd_display +]% ?]
 
-Support for the Republic: [+ pro_republic_disp +]%
+Support for the Republic: [+ pro_monarchy_disp +]%
