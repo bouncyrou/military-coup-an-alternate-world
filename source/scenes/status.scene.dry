@@ -29,6 +29,8 @@ SPD position: [? if spd_toleration : toleration ?][? if spd_in_government : in g
 
 Internal dissent: [+ dissent_percent : dissent +]
 
+Secrecy: [+ secrecy +]
+
 = Government
 
 President: [+ president +]

@@ -6,12 +6,11 @@ go-to: post_event if started = 1; start_menu if started = 0
 new-page: true
 go-to: start_menu_2
 
-= Social Democracy: An Alternate History
+= Military Coup: An Alternate World
 
 @start_menu_2
 
 - @start: Start game
-- @election_simulation: Election simulation
 - @credits: Credits
 - @game_over.achievements
 
@@ -21,7 +20,7 @@ on-arrival: {!
 Q.started = 1;
 // time elapsed (in months)
 Q.time = 1;
-Q.year = 1928;
+Q.year = 1942;
 Q.month = 1;
 // how many actions have been taken this month?
 Q.month_actions = 0;
@@ -40,6 +39,7 @@ Q.saves_disabled = 0;
 Q.discard_disabled = 0;
 Q.hand_size = 3;
 Q.starting_dissent = 1; // default dissent = normal
+Q.starting_secrecy = 1;
 Q.starting_relations = 1;
 Q.shuffle_leadership_enabled = 0;
 Q.cabinet_enabled = 0;
@@ -52,14 +52,16 @@ Q.hindenburg_enabled = 0;
 // party resources
 Q.starting_resources = 2;
 Q.resources = 2;
-// party dues - fundraising income
+// siphoned resources - fundraising income
 Q.starting_dues = 2;
 Q.dues = 2;
 
 // the state of the party
-// overall dissent reduces every increase in party support.
+// overall dissent reduces the efficacy of conspiracy actions.
 Q.dissent = 0.05;
 Q.dissent_percent = 5;
+// If secrecy (actually a lack of it) gets too high, you are discovered.
+Q.secrecy = 0.05;
 
 // factions
 Q.factions = ['left', 'center', 'labor', 'reformist', 'neorevisionist'];
@@ -138,10 +140,8 @@ Q.hindenburg_relation = 25;
 // similar to coalition dissent, this is how much Hindenburg is set against you.
 Q.hindenburg_dissent = 0;
 
-// Does the SPD lead in Prussia?
-Q.spd_prussia = 1;
-// Options: spd, z, dnvp, papen, nsdap
-Q.prussian_government = "SPD";
+// Does the military hold the defence ministry? 0 = no, 1 = yes, 2 = conspirator
+Q.mil_defence = 1;
 
 // The array of forces - paramilitary groups
 // Number of members in 1928 (in thousands)
@@ -185,8 +185,8 @@ Q.reichswehr_loyalty = 0.2;
 Q.nationalism = 60;
 // socialism vs capitalism
 Q.socialism = 40;
-// pro-republic vs anti-republic
-Q.pro_republic = 59;
+// pro-monarchy vs anti-monarchy
+Q.pro_monarchy = 59;
 
 Q.emergency_rule = 0;
 
@@ -400,8 +400,8 @@ Q.justice_minister = 'Hergt';
 Q.justice_minister_party = 'DNVP';
 Q.labor_minister = 'Brauns';
 Q.labor_minister_party = 'Z';
-Q.reichswehr_minister = 'Groener';
-Q.reichswehr_minister_party = 'I';
+Q.defence_minister = 'Laceholder';
+Q.defence_minister_party = 'I';
 Q.economic_minister = 'Curtius';
 Q.economic_minister_party = 'DVP';
 Q.finance_minister = 'Köhler';
@@ -598,9 +598,9 @@ Q.stampfer_advisor = 0; // Friedrich Stampfer
 set-bg: img/map_2.jpg
 new-page: true
 
-> *"Such a general development cannot be attributed to the false tactics of any single party or to the mistakes of individual leaders. On the contrary, the conduct of individual leaders is determined largely by the sentiments of the people as a whole. It would be erroneous, however, to regard the sentiments of the moment as reflecting the natural make-up and character of the people. They are merely the consequence of the special circumstances which have brought about this profound degradation of the entire nation."*
+> *"Auraful Quote."*
 
- - Karl Kautsky, *Hitlerism and Social Democracy*, 1934
+ - P. Laceholder, *Source*, DATE
 
 This is a game of alternate history. While historical accuracy is a major concern, keep in mind that this is a *game*, and that any divergence from actual events will necessarily have to involve some element of make-believe. Nevertheless, please let the author know if there are any glaring mistakes.
 
@@ -613,11 +613,11 @@ For more information on the politics and government of the German Republic, see 
 - @1928_custom: Customize difficulty settings
 
 @1928_easy
-on-arrival: difficulty = -1; resources = 4; dues = 3; starting_rb_strength = 2500; rb_strength = 2500; left_dissent = 10; kpd_relation = 29; z_relation = 54; dvp_relation = 49; starting_budget = 5; budget = 5; hand_size = 4; starting_dissent = 0; starting_relations = 0;
+on-arrival: difficulty = -1; resources = 4; dues = 3; starting_rb_strength = 2500; rb_strength = 2500; left_dissent = 10; kpd_relation = 29; z_relation = 54; dvp_relation = 49; starting_budget = 5; budget = 5; hand_size = 4; starting_dissent = 0; starting_relations = 0; starting_secrecy = 0;
 go-to: 1928_main
 
 @1928_hard
-on-arrival: difficulty = 1; resources = 0; starting_resources = 0; dues = 1; starting_rb_strength = 1000; rb_strength = 1000; reformist_dissent = 25; left_dissent = 30; labor_dissent = 25; center_dissent = 25; z_relation = 41; kpd_relation = 16; dvp_relation = 31; starting_budget = 3; budget = 3; discard_disabled = 1; starting_dissent = 2; starting_relations = 2;
+on-arrival: difficulty = 1; resources = 0; starting_resources = 0; dues = 1; starting_rb_strength = 1000; rb_strength = 1000; reformist_dissent = 25; left_dissent = 30; labor_dissent = 25; center_dissent = 25; z_relation = 41; kpd_relation = 16; dvp_relation = 31; starting_budget = 3; budget = 3; discard_disabled = 1; starting_dissent = 2; starting_relations = 2; starting_secrecy = 2;
 go-to: 1928_main
 
 @1928_historical
@@ -642,6 +642,7 @@ Q.kpd_relation = 16;
 Q.dvp_relation = 31;
 Q.budget = 2;
 Q.fundraising_disabled = 1;
+Q.starting_secrecy = 2;
 Q.saves_disabled = 1;
 this.state.disableSaves = true;
 !}
@@ -655,10 +656,10 @@ audio: shuffle music/1928_1930/FruhlingsliedMendelssohn.mp3 music/1928_1930/AUF_
 new-page: true
 go-to: main if hand_size == 3; main.main_easy if hand_size == 4
 
-= 1928
+= 1942
 
-It is a bright time for German democracy. After a period of struggle, inflation is finally under control, and the economy is expanding steadily. In foreign policy, we have reached agreements with the Western powers and the Soviet Union that might make genuine peace a reality. 
+It is a grim time for the COUNTRY. Despite a year of struggle, disease is still rampant, and the economy is choking under the strain. In foreign policy, we remain bound to the interests of the Lakhamid and Galanan powers, with little hope that the MONARCH will fight for our independence. 
 
-Now, the task of Social Democracy is to prepare for the next election. The bourgeois-right government of Wilhelm Marx is unpopular, and we stand to gain. Perhaps the next government will have a socialist majority.
+Now, the task of strong men is to act in defence of their nation. The royal government of CURRENT PM is feeble unpopular, and an opportunity is opening. Perhaps you will be the one to lead COUNTRY to greatness.
 
 
