@@ -135,10 +135,13 @@ Q.z_leader = "Brüning";
 Q.z_party_leader = "Marx";
 Q.nsdap_leader = "Hitler";
 
-// hmm... maybe we can play nice with Hindenburg???
-Q.hindenburg_relation = 25;
-// similar to coalition dissent, this is how much Hindenburg is set against you.
-Q.hindenburg_dissent = 0;
+// hmm... maybe we can play nice with the imperialists???
+// 0 - backing govt, 1 - backing Socialists, 2 - backing us, 3 - backing ICP
+Q.lakhamid_relation = 25;
+Q.lakhamid_support = 0;
+Q.eucleia_relation = 35;
+Q.eucleia_support = 1;
+
 
 // Does the military hold the defence ministry? 0 = no, 1 = yes, 2 = conspirator
 Q.mil_defence = 1;
@@ -348,9 +351,9 @@ Q.economic_records = [];
 
 
 // State of the government
-Q.president = "Hindenburg";
-// starting chancellor: Wilhelm Marx
-Q.chancellor = "Marx";
+Q.president = "Pōmare";
+// starting chancellor: Wang Guofan
+Q.chancellor = "Wang";
 Q.chancellor_party = 'Z';
 Q.spd_in_government = 0;
 Q.z_in_government = 1;
